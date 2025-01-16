@@ -1,0 +1,31 @@
+# Changelog
+
+## [Unreleased]
+- Enhanced Playwright implementation with robust error handling, retries, and content validation
+- Added fixture validation to ensure news is only fetched for valid matches
+- Fixed fixture search in NewsService to use FirstOrDefaultAsync with proper ID comparison
+- Fixed GetMatchNews endpoint to use fixture repository instead of history repository
+- Fixed duplicate dependency registration causing constructor resolution issues
+- Added memory caching and rate limiting to news service for improved performance
+- Improved news content extraction with better selectors and content cleaning
+- Added proper resource cleanup and browser management in PlaywrightService
+- Added GetMatchNews endpoint to fetch news articles about matches using Serper and Playwright
+- Added Playwright integration for web scraping with smart content extraction
+- Enabled full news search functionality with match validation and team-specific searches
+- Added authentication to local Crawl4AI instance for improved security
+- Fixed route conflicts in MatchesController by adding unique route paths for all endpoints
+- Fixed type mismatch in GetMatchNews endpoint to handle long match IDs correctly
+- Improved mobile search input focus reliability by preventing focus stealing and optimizing drawer behavior
+- Updated Vite configuration to properly read port from .env file
+- Updated API port to 5501
+- Fixed tailwind configuration to use ES modules syntax with dynamic imports
+- Fixed screen blur issue after closing betslip by properly cleaning up backdrop effects
+- Fixed ViewMatchComponent to use correct prop name 'match' instead of undefined 'matchData'
+- Added null check in ViewMatchComponent to prevent undefined property access errors 
+- Fixed prop name mismatch in ViewMatchComponent (match -> matchData) to correctly display matches 
+- Restored showOnlyTips prop in ViewMatchComponent that was accidentally removed during refactoring 
+- Changed betslip to slide up from bottom with pull-down-to-close gesture 
+- Fixed YouTube iframe controls not being clickable by adjusting z-index and pointer events 
+- Fixed YouTube iframe click positioning for accurate control interaction 
+- Improved betslip pull-down gesture by moving it to MobileBetSlip component 
+- Fixed linter errors in BetSlipComponent and simplified code structure

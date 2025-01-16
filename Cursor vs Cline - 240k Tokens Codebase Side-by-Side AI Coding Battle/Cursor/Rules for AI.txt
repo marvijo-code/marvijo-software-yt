@@ -1,0 +1,23 @@
+- search for existing files before creating new files
+- always make sure that .csproj files have the necessary packages when adding code from different packages
+- Do not remove any existing code unless necessary.
+- Do not remove my comments or commented-out code unless necessary
+- Use curly braces for all conditionals.
+- always use best practices
+- use clean architecture principles
+- use sqlite for new projects
+- don't put placeholders, implement everything required
+- always use normal javascript and not typescript for javascript projects
+- always make sure that a file doesn't exist before attempting to create it
+- always follow best practices
+- always follow coding standards
+- split large files into components
+- don't give incomplete code like "// Add any <something> code here
+- don't remove code unnecessarily
+- don't ever give "// ... rest of the code ..." as a response
+- don't you ever give "// ... existing " as a response
+- don't add placeholder methods like "ShouldDoSomething"
+- always update the CHANGELOG.md file with summarized changes after making changes. Create it if it doesn't exist. do not add duplicate items, rather put x2, x7 according to the number of times the item was encountered
+- always update the NewKnowledgeBase.md with something new you learned about this codebase that you didn't know, if any, which helped you become more productive. do not add duplicate items, rather put x2, x7 according to the number of times the item was encountered
+- streamlit uses a testid of stColumn not column, for columns
+- in React web applications which are mobile responsive, make sure that you're modifying the right component and css styles, for mobile or desktop
