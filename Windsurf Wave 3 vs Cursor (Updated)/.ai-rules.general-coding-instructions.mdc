@@ -1,0 +1,102 @@
+**Code Contribution Guidelines for LLMs**
+
+variable <ai_instructions_folder>=".ai-instructions/"
+
+**AI Code Assistant Guidelines**
+
+**1. Package Management**  
+- When adding new packages:  
+  ```bash
+  # .NET
+  dotnet add package <package_name>
+  
+  # Python
+  pip install <package_name>
+  
+  # JavaScript/Node.js
+  npm install <package_name>
+  ```
+- Always verify and update .csproj/.vbproj files with required NuGet packages  
+- Never remove existing package references without explicit instruction
+
+**2. Code Structure & Best Practices**  
+✅ Mandatory Formatting:  
+- Use **curly braces** with new lines for all conditionals and loops.
+
+```csharp
+// GOOD
+if (condition) 
+{
+    // logic
+}
+
+// BAD
+if (condition) return;
+```
+- Use clean architecture principles (Core/Application/Infrastructure/UI layers)  
+- Split components when files exceed 200 lines  
+- SQLite as default database for new projects  
+- Normal JavaScript (no TypeScript) unless specified
+- IF THERE IS A NEW MAJOR TECHNOLOGY CHANGE IN THE PROJECT, CREATE AN ARCHITECTURE DECISION RECORD FILE WITH FULL DETAILS OF WHY THE CHANGE WAS MADE, AND WHAT CHANGED (e.g., changed from Clerk to Supabase for authentication, <ai_instructions_folder>/adr-332.md)
+
+  **3. File Management**  
+- - Verify file existence before creation (no duplicates)
++ - Before creating any new files, the assistant must:
++   a. Check the <maybe_relevant_files> list if provided
++   b. Look for existing files with similar names or purposes
++   c. Only create new files if no suitable existing file is found
++ - Look in referenced projects as well, e.g., look in the Shared project if there are references to classes which don't seem to exist in the current project
+  ### Look in referenced projects as well, e.g., look in the Shared project if there are references to classes which don't seem to exist in the current project
+  
+  - Preserve all existing code/comments unless explicitly instructed  
+  - Never use placeholders:    
+  
+  ```csharp
+  // BAD
+  // Implement validation here
+  
+  // GOOD
+  public bool ValidateInput(string input) 
+  {
+      return !string.IsNullOrEmpty(input);
+  }
+  ```
+
+**4. Documentation & Logging**  
+- Update CHANGELOG.md for significant changes (use x2/x7 notation for duplicates):  
+  ```markdown
+  ## [YYYY-MM-DD]
+  - Added user authentication flow x3
+  - Fixed inventory reporting bug
+  ```
+- Maintain NewKnowledgeBase.md with architectural insights:  
+  ```markdown
+  ## Discoveries
+  - Core layer references System.Text.Json x4
+  - API rate limiting configured in Infrastructure x2
+  ```
+- Never remove logging statements
+
+**5. Framework-Specific Rules**  
+*ASP.NET/C#:*  
+- File-scoped namespaces required  
+- Verify all `using` statements  
+- Streamlit: Use `stColumn` test IDs  
+
+*React:*  
+- Mobile-first responsive design  
+- Validate CSS media queries:  
+  ```css
+  /* Desktop */
+  @media (min-width: 768px) { ... }
+
+  /* Mobile */
+  @media (max-width: 767px) { ... }
+  ```
+
+**6. Compliance & Validation**  
+⚠️ **MANDATORY CONFIRMATION:**  
+"✅ Verified: Core functionality preserved. No unauthorized code removal detected. Existing comments/logging maintained."
+
+- Never make assumptions about the codebase, always verify the codebase first. As a last resort, ask the user for clarification.
+- When writing Terminal commands, don't replace '&' with '&amp;', nor any similar replacements.
