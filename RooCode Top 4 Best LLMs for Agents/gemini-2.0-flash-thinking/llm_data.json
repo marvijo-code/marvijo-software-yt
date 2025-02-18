@@ -1,0 +1,104 @@
+{
+  "llms": [
+    {
+      "name": "Gemini 2 Pro",
+      "pricing_input": 0.10,
+      "pricing_output": 0.40,
+      "pricing_link": "https://ai.google.dev/pricing",
+      "aider_rank": 7,
+      "aider_percentage": 38.2,
+      "livebench_rank": 6,
+      "livebench_percentage": 65.13
+    },
+    {
+      "name": "Gemini 2 Flash",
+      "pricing_input": 0.10,
+      "pricing_output": 0.40,
+      "pricing_link": "https://ai.google.dev/pricing",
+      "aider_rank": 8,
+      "aider_percentage": 22.2,
+      "livebench_rank": 10,
+      "livebench_percentage": 61.47
+    },
+    {
+      "name": "Claude 3.5 Sonnet",
+      "pricing_input": 3.00,
+      "pricing_output": 15.00,
+      "pricing_link": "https://www.anthropic.com/pricing", 
+      "aider_rank": 6,
+      "aider_percentage": 51.6,
+      "livebench_rank": 13,
+      "livebench_percentage": 59.03
+    },
+    {
+      "name": "GPT-4o",
+      "pricing_input": 5.00,
+      "pricing_output": 15.00,
+      "pricing_link": "https://openai.com/pricing/",
+      "aider_rank": 11,
+      "aider_percentage": 23.1,
+      "livebench_rank": 14,
+      "livebench_percentage": 57.79
+    },
+    {
+      "name": "OpenAI o3-mini",
+      "pricing_input": 1.10,
+      "pricing_output": 4.40,
+      "pricing_link": "https://openai.com/pricing/",
+      "aider_rank": 3,
+      "aider_percentage": 60.4,
+      "livebench_rank": 1,
+      "livebench_percentage": 75.88
+    },
+    {
+      "name": "OpenAI o1",
+      "pricing_input": 15.00,
+      "pricing_output": 60.00,
+      "pricing_link": "https://openai.com/pricing/",
+      "aider_rank": 2,
+      "aider_percentage": 61.7,
+      "livebench_rank": 2,
+      "livebench_percentage": 75.67
+    },
+    {
+      "name": "DeepSeek R1",
+      "pricing_input": 0.55,
+      "pricing_output": 2.19,
+      "pricing_link": "https://api-docs.deepseek.com/quick_start/pricing",
+      "aider_rank": 4,
+      "aider_percentage": 56.9,
+      "livebench_rank": 3,
+      "livebench_percentage": 71.57
+    },
+    {
+      "name": "DeepSeek V3",
+      "pricing_input": 0.27,
+      "pricing_output": 1.10,
+      "pricing_link": "https://api-docs.deepseek.com/quick_start/pricing",
+      "aider_rank": 5,
+      "aider_percentage": 48.4,
+      "livebench_rank": 11,
+      "livebench_percentage": 60.45
+    },
+    {
+      "name": "Qwen 2.5 Max",
+      "pricing_input": 1.60,
+      "pricing_output": 6.40,
+      "pricing_link": "https://www.alibabacloud.com/help/en/model-studio/developer-reference/billing-for-tongyiqianwen",
+      "aider_rank": 9,
+      "aider_percentage": 21.8,
+      "livebench_rank": 9,
+      "livebench_percentage": 62.29
+    },
+    {
+      "name": "Qwen 2.5 Coder 32B",
+      "pricing_input": 0.18,
+      "pricing_output": 0.18,
+      "pricing_link": "https://huggingface.co/Qwen/Qwen2.5-Coder-32B", 
+      "aider_rank": 10,
+      "aider_percentage": 16.4,
+      "livebench_rank": 30,
+      "livebench_percentage": 46.23
+    }
+  ]
+}

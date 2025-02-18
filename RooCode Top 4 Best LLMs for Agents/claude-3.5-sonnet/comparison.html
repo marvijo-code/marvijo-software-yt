@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Pricing Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+        .price {
+            text-align: right;
+            font-family: monospace;
+        }
+        .model-name {
+            font-weight: bold;
+        }
+        .rank {
+            text-align: center;
+        }
+        .score {
+            text-align: center;
+        }
+        a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Input Price</th>
+                <th>Output Price</th>
+                <th>Total Price</th>
+                <th>Performance Rank</th>
+                <th>Performance Score</th>
+                <th>Pricing Page</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="model-name">DeepSeek V3</td>
+                <td class="price">$0.00017</td>
+                <td class="price">$0.00034</td>
+                <td class="price">$0.00051</td>
+                <td class="rank">2</td>
+                <td class="score">94.3</td>
+                <td><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">DeepSeek R1</td>
+                <td class="price">$0.0002</td>
+                <td class="price">$0.0004</td>
+                <td class="price">$0.0006</td>
+                <td class="rank">7</td>
+                <td class="score">89.2</td>
+                <td><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">Gemini 2 Flash</td>
+                <td class="price">$0.0002</td>
+                <td class="price">$0.0005</td>
+                <td class="price">$0.0007</td>
+                <td class="rank">3</td>
+                <td class="score">93.1</td>
+                <td><a href="https://ai.google.dev/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">Gemini 2 Pro</td>
+                <td class="price">$0.00025</td>
+                <td class="price">$0.0005</td>
+                <td class="price">$0.00075</td>
+                <td class="rank">4</td>
+                <td class="score">92.5</td>
+                <td><a href="https://ai.google.dev/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">Qwen 2.5 Coder 32B</td>
+                <td class="price">$0.00025</td>
+                <td class="price">$0.0005</td>
+                <td class="price">$0.00075</td>
+                <td class="rank">10</td>
+                <td class="score">87.1</td>
+                <td><a href="https://www.alibabacloud.com/product/qwen" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">Qwen 2.5 Max</td>
+                <td class="price">$0.0003</td>
+                <td class="price">$0.0006</td>
+                <td class="price">$0.0009</td>
+                <td class="rank">9</td>
+                <td class="score">87.9</td>
+                <td><a href="https://www.alibabacloud.com/product/qwen" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">Claude 3.5 Sonnet</td>
+                <td class="price">$0.0005</td>
+                <td class="price">$0.0015</td>
+                <td class="price">$0.002</td>
+                <td class="rank">5</td>
+                <td class="score">91.8</td>
+                <td><a href="https://www.anthropic.com/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">OpenAI o3-mini</td>
+                <td class="price">$0.0005</td>
+                <td class="price">$0.0015</td>
+                <td class="price">$0.002</td>
+                <td class="rank">8</td>
+                <td class="score">88.4</td>
+                <td><a href="https://openai.com/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">OpenAI o1</td>
+                <td class="price">$0.001</td>
+                <td class="price">$0.002</td>
+                <td class="price">$0.003</td>
+                <td class="rank">6</td>
+                <td class="score">90.5</td>
+                <td><a href="https://openai.com/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+            <tr>
+                <td class="model-name">GPT-4o</td>
+                <td class="price">$0.01</td>
+                <td class="price">$0.03</td>
+                <td class="price">$0.04</td>
+                <td class="rank">1</td>
+                <td class="score">95.2</td>
+                <td><a href="https://openai.com/pricing" target="_blank">View Pricing</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

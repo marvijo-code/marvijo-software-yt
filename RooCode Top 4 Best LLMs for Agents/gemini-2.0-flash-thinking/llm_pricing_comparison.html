@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LLM API Pricing Comparison</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  .pricing-link {
+    white-space: nowrap; /* Prevent link text from wrapping */
+    overflow: hidden;      /* Hide overflowing text */
+    text-overflow: ellipsis; /* Show ellipsis for overflow */
+    display: block;        /* Make it a block-level element */
+    max-width: 200px;      /* Adjust max-width as needed */
+  }
+</style>
+</head>
+<body>
+
+<h2>LLM API Pricing Comparison (Per Million Tokens)</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>LLM Name</th>
+      <th>Input Price</th>
+      <th>Output Price</th>
+      <th>Total Price</th>
+      <th>Aider Rank</th>
+      <th>Aider Rating (%)</th>
+      <th>LiveBench Rank</th>
+      <th>LiveBench Rating (%)</th>
+      <th>Pricing Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Qwen 2.5 Coder 32B</td>
+      <td>$0.18</td>
+      <td>$0.18</td>
+      <td>$0.36</td>
+      <td>10</td>
+      <td>16.4%</td>
+      <td>30</td>
+      <td>46.23%</td>
+      <td><a href="https://huggingface.co/Qwen/Qwen2.5-Coder-32B" class="pricing-link">Qwen 2.5 Coder 32B Pricing</a></td>
+    </tr>
+    <tr>
+      <td>Gemini 2 Flash</td>
+      <td>$0.10</td>
+      <td>$0.40</td>
+      <td>$0.50</td>
+      <td>8</td>
+      <td>22.2%</td>
+      <td>10</td>
+      <td>61.47%</td>
+      <td><a href="https://ai.google.dev/pricing" class="pricing-link">Gemini Pricing</a></td>
+    </tr>
+    <tr>
+      <td>Gemini 2 Pro</td>
+      <td>$0.10</td>
+      <td>$0.40</td>
+      <td>$0.50</td>
+      <td>7</td>
+      <td>38.2%</td>
+      <td>6</td>
+      <td>65.13%</td>
+      <td><a href="https://ai.google.dev/pricing" class="pricing-link">Gemini Pricing</a></td>
+    </tr>
+    <tr>
+      <td>DeepSeek V3</td>
+      <td>$0.27</td>
+      <td>$1.10</td>
+      <td>$1.37</td>
+      <td>5</td>
+      <td>48.4%</td>
+      <td>11</td>
+      <td>60.45%</td>
+      <td><a href="https://api-docs.deepseek.com/quick_start/pricing" class="pricing-link">DeepSeek Pricing</a></td>
+    </tr>
+    <tr>
+      <td>Qwen 2.5 Max</td>
+      <td>$1.60</td>
+      <td>$6.40</td>
+      <td>$8.00</td>
+      <td>9</td>
+      <td>21.8%</td>
+      <td>9</td>
+      <td>62.29%</td>
+      <td><a href="https://www.alibabacloud.com/help/en/model-studio/developer-reference/billing-for-tongyiqianwen" class="pricing-link">Qwen Pricing</a></td>
+    </tr>
+    <tr>
+      <td>OpenAI o3-mini</td>
+      <td>$1.10</td>
+      <td>$4.40</td>
+      <td>$5.50</td>
+      <td>3</td>
+      <td>60.4%</td>
+      <td>1</td>
+      <td>75.88%</td>
+      <td><a href="https://openai.com/pricing/" class="pricing-link">OpenAI Pricing</a></td>
+    </tr>
+    <tr>
+      <td>DeepSeek R1</td>
+      <td>$0.55</td>
+      <td>$2.19</td>
+      <td>$2.74</td>
+      <td>4</td>
+      <td>56.9%</td>
+      <td>3</td>
+      <td>71.57%</td>
+      <td><a href="https://api-docs.deepseek.com/quick_start/pricing" class="pricing-link">DeepSeek Pricing</a></td>
+    </tr>
+    <tr>
+      <td>Claude 3.5 Sonnet</td>
+      <td>$3.00</td>
+      <td>$15.00</td>
+      <td>$18.00</td>
+      <td>6</td>
+      <td>51.6%</td>
+      <td>13</td>
+      <td>59.03%</td>
+      <td><a href="https://www.anthropic.com/pricing" class="pricing-link">Anthropic Pricing</a></td>
+    </tr>
+    <tr>
+      <td>GPT-4o</td>
+      <td>$5.00</td>
+      <td>$15.00</td>
+      <td>$20.00</td>
+      <td>11</td>
+      <td>23.1%</td>
+      <td>14</td>
+      <td>57.79%</td>
+      <td><a href="https://openai.com/pricing/" class="pricing-link">OpenAI Pricing</a></td>
+    </tr>
+    <tr>
+      <td>OpenAI o1</td>
+      <td>$15.00</td>
+      <td>$60.00</td>
+      <td>$75.00</td>
+      <td>2</td>
+      <td>61.7%</td>
+      <td>2</td>
+      <td>75.67%</td>
+      <td><a href="https://openai.com/pricing/" class="pricing-link">OpenAI Pricing</a></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

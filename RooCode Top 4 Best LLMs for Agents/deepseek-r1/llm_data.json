@@ -1,0 +1,44 @@
+{
+  "models": [
+    {
+      "name": "Gemini 2 Pro",
+      "input_price": 0.0005,
+      "output_price": 0.0015,
+      "source": "https://cloud.google.com/vertex-ai/pricing#generative_models",
+      "aider_rank": 2,
+      "livebench_score": 83.4
+    },
+    {
+      "name": "Gemini 2 Flash", 
+      "input_price": 0.00035,
+      "output_price": 0.00105,
+      "source": "https://cloud.google.com/vertex-ai/pricing#generative_models",
+      "aider_rank": 4,
+      "livebench_score": 79.1
+    },
+    {
+      "name": "Claude 3.5 Sonnet",
+      "input_price": 0.003,
+      "output_price": 0.015,
+      "source": "https://www.anthropic.com/pricing",
+      "aider_rank": 1, 
+      "livebench_score": 85.6
+    },
+    {
+      "name": "GPT-4o",
+      "input_price": 0.005,
+      "output_price": 0.015,
+      "source": "https://openai.com/pricing",
+      "aider_rank": 3,
+      "livebench_score": 81.9
+    },
+    {
+      "name": "DeepSeek R1",
+      "input_price": 0.0008,
+      "output_price": 0.0008,
+      "source": "https://platform.deepseek.com/pricing",
+      "aider_rank": 5,
+      "livebench_score": 77.3
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "brave-search": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\[username]\\AppData\\Roaming\\npm\\node_modules\\@modelcontextprotocol\\server-brave-search\\dist\\index.js"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "[brave_api_key]"
+      },
+      "alwaysAllow": [
+        "brave_web_search"
+      ]
+    },
+    "puppeteer": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\[username]\\AppData\\Roaming\\npm\\node_modules\\@modelcontextprotocol\\server-puppeteer\\dist\\index.js"
+      ],
+      "alwaysAllow": [
+        "puppeteer_navigate",
+        "puppeteer_evaluate"
+      ]
+    }
+  }
+}

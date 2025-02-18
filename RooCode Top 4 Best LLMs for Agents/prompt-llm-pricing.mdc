@@ -1,0 +1,37 @@
+---
+description: Research and Consolidate LLM Pricing and Leaderboards
+globs: 
+---
+# Create a professional html file with a table to compare the API pricing (per million tokens) of the following LLMs:
+
+- Gemini 2 Pro
+- Gemini 2 Flash
+- Claude 3.5 Sonnet
+- GPT-4o
+- OpenAI o3-mini
+- OpenAI o1
+- DeepSeek R1
+- DeepSeek V3
+- Qwen 2.5 Max
+- Qwen 2.5 Coder 32B
+
+## Add the standing/position and percentage/rating of the LLMs in the table from the following sources:
+### https://aider.chat/docs/leaderboards/
+### https://livebench.ai/
+
+- ONLY USE DATA FROM OFFICIAL SOURCES
+- a web search isn't sufficient, you need to scrape the data from the official source URLs after you have the URLs from the web search
+- Make sure you search the internet for the latest pricing and data.
+- Do not add sample data to the table.
+- Do not add any other text to the table.
+- Just the table.
+- Make sure that the data is correct
+- if you store any data, store it in a simple json file
+- only store data you need in llm_data.json
+- make sure you use the right naming for the llms, e.g., "Deepseek R1" is different to "Deepseek V3" and it's not generally "Deepseek"
+- make sure you use the right pricing for the llms, e.g., "Deepseek R1" is different to "Deepseek V3" and it's not generally "Deepseek"
+- make sure the html table looks professional and is easy to read
+- use alternate colors for the rows
+- add a Total Price column to the table that sums up the input and output prices of the llms
+- order the table by the Total Price column
+- add a column with a link to the pricing page of each llm

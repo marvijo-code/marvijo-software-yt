@@ -1,0 +1,94 @@
+{
+  "models": [
+    {
+      "name": "Gemini 2 Pro",
+      "input_price": 0.00025,
+      "output_price": 0.0005,
+      "total_price": 0.00075,
+      "pricing_url": "https://ai.google.dev/pricing",
+      "performance_rank": 4,
+      "performance_score": 92.5
+    },
+    {
+      "name": "Gemini 2 Flash",
+      "input_price": 0.0002,
+      "output_price": 0.0005,
+      "total_price": 0.0007,
+      "pricing_url": "https://ai.google.dev/pricing",
+      "performance_rank": 3,
+      "performance_score": 93.1
+    },
+    {
+      "name": "Claude 3.5 Sonnet",
+      "input_price": 0.0005,
+      "output_price": 0.0015,
+      "total_price": 0.002,
+      "pricing_url": "https://www.anthropic.com/pricing",
+      "performance_rank": 5,
+      "performance_score": 91.8
+    },
+    {
+      "name": "GPT-4o",
+      "input_price": 0.01,
+      "output_price": 0.03,
+      "total_price": 0.04,
+      "pricing_url": "https://openai.com/pricing",
+      "performance_rank": 1,
+      "performance_score": 95.2
+    },
+    {
+      "name": "OpenAI o3-mini",
+      "input_price": 0.0005,
+      "output_price": 0.0015,
+      "total_price": 0.002,
+      "pricing_url": "https://openai.com/pricing",
+      "performance_rank": 8,
+      "performance_score": 88.4
+    },
+    {
+      "name": "OpenAI o1",
+      "input_price": 0.001,
+      "output_price": 0.002,
+      "total_price": 0.003,
+      "pricing_url": "https://openai.com/pricing",
+      "performance_rank": 6,
+      "performance_score": 90.5
+    },
+    {
+      "name": "DeepSeek R1",
+      "input_price": 0.0002,
+      "output_price": 0.0004,
+      "total_price": 0.0006,
+      "pricing_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "performance_rank": 7,
+      "performance_score": 89.2
+    },
+    {
+      "name": "DeepSeek V3",
+      "input_price": 0.00017,
+      "output_price": 0.00034,
+      "total_price": 0.00051,
+      "pricing_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "performance_rank": 2,
+      "performance_score": 94.3
+    },
+    {
+      "name": "Qwen 2.5 Max",
+      "input_price": 0.0003,
+      "output_price": 0.0006,
+      "total_price": 0.0009,
+      "pricing_url": "https://www.alibabacloud.com/product/qwen",
+      "performance_rank": 9,
+      "performance_score": 87.9
+    },
+    {
+      "name": "Qwen 2.5 Coder 32B",
+      "input_price": 0.00025,
+      "output_price": 0.0005,
+      "total_price": 0.00075,
+      "pricing_url": "https://www.alibabacloud.com/product/qwen",
+      "performance_rank": 10,
+      "performance_score": 87.1
+    }
+  ]
+}
