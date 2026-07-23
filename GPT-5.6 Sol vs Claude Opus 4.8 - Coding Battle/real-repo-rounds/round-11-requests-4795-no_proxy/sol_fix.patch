@@ -1,0 +1,19 @@
+diff --git a/src/requests/utils.py b/src/requests/utils.py
+index 838bf7b..1560cfd 100644
+--- a/src/requests/utils.py
++++ b/src/requests/utils.py
+@@ -851,7 +851,13 @@ def should_bypass_proxies(url: str, no_proxy: str | None) -> bool:
+                 host_with_port += f":{parsed.port}"
+ 
+             for host in no_proxy_hosts:
+-                if hostname.endswith(host) or host_with_port.endswith(host):
++                host = host.lstrip(".")
++                if (
++                    hostname == host
++                    or hostname.endswith(f".{host}")
++                    or host_with_port == host
++                    or host_with_port.endswith(f".{host}")
++                ):
+                     # The URL does match something in no_proxy, so we don't want
+                     # to apply the proxies on this URL.
+                     return True

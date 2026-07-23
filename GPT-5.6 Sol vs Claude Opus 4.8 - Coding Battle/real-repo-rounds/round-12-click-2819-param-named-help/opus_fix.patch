@@ -1,0 +1,26 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 6de4216..a972b45 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -1173,6 +1173,21 @@ class Command:
+             help_option(*help_option_names)(self)
+             self._help_option = self.params.pop()  # type: ignore[assignment]
+ 
++            # The help option's storage name is derived from its option name
++            # (e.g. ``--help`` -> ``help``). If a user parameter already uses
++            # that same storage name, the two collide and break parsing. The
++            # help option does not expose its value, so give it a distinct
++            # internal name that does not clash with any other parameter.
++            used_names = {param.name for param in self.params}
++
++            if self._help_option.name in used_names:
++                unique_name = self._help_option.name
++
++                while unique_name in used_names:
++                    unique_name = f"_{unique_name}"
++
++                self._help_option.name = unique_name
++
+         return self._help_option
+ 
+     def make_parser(self, ctx: Context) -> _OptionParser:

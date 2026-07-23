@@ -1,0 +1,15 @@
+diff --git a/pydantic/json_schema.py b/pydantic/json_schema.py
+index eb25c08..72d5a10 100644
+--- a/pydantic/json_schema.py
++++ b/pydantic/json_schema.py
+@@ -1756,6 +1756,10 @@ class GenerateJsonSchema:
+         Returns:
+             `True` if the field should be marked as required in the generated JSON schema, `False` otherwise.
+         """
++        if self.mode == 'serialization' and field.get('serialization_exclude_if') is not None:
++            # A field with `exclude_if` set may be absent from the serialized output,
++            # so it must not be marked as required in the serialization JSON schema.
++            return False
+         if self.mode == 'serialization' and self._config.json_schema_serialization_defaults_required:
+             return not field.get('serialization_exclude')
+         else:

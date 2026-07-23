@@ -1,0 +1,38 @@
+{
+  "repo": "psf/requests",
+  "repo_url": "https://github.com/psf/requests.git",
+  "issue_number": 4795,
+  "issue_title": "`no_proxy` implementation is too greedy",
+  "pr_number": 7427,
+  "pr_title": "Port bpo-39057 to Requests",
+  "base_sha": "3816cfa1abd42dca21b9e837f26c59b246016aaf",
+  "merge_sha": "a4f9a5999bdb9bf2d6e7c8aa973b28cacb17134f",
+  "merged_at": "2026-05-11T02:05:35Z",
+  "source_files_changed": ["src/requests/utils.py"],
+  "test_files_changed": ["tests/test_utils.py"],
+  "grade_tests": [
+    "tests/test_utils.py::test_should_bypass_proxies_no_proxy_domain_boundary"
+  ],
+  "regression_tests": [
+    "tests/test_utils.py"
+  ],
+  "grading_command": ".venv/Scripts/python -m pytest tests/test_utils.py -q",
+  "grading_command_notes": "Apply tests.patch onto the solver's working tree first (adds the hidden graded test to tests/test_utils.py). Then run the command from the repo root. PASS criteria: the whole tests/test_utils.py module is green (228 passed, 1 skipped). The single graded node is tests/test_utils.py::test_should_bypass_proxies_no_proxy_domain_boundary (a parametrized test with 9 cases). Runtime ~1.3s.",
+  "fail_at_base_evidence": "At BASE + tests.patch: `test_should_bypass_proxies_no_proxy_domain_boundary[http://prelocalhost/-False]` FAILS (AssertionError: True == False; 'prelocalhost' greedily matched 'localhost' via endswith). 1 failed, 8 passed.",
+  "pass_at_merge_evidence": "At MERGE (real fix in src/requests/utils.py): the graded test passes; full tests/test_utils.py = 228 passed, 1 skipped in ~0.5s.",
+  "validator": {
+    "solved": true,
+    "read_pr_source_diff_before_solving": false,
+    "fix_summary": "In requests.utils.should_bypass_proxies, in the non-IPv4 branch that loops over no_proxy_hosts, replaced the greedy `hostname.endswith(host) or host_with_port.endswith(host)` check with domain-boundary matching: strip a leading dot from the entry, return True on an exact match (hostname == host or host_with_port == host), otherwise return True only when hostname/host_with_port endswith '.'+host (proper subdomain). This makes 'prelocalhost' no longer match 'localhost', while 'foo.d.o.t' and 'd.o.t' still match '.d.o.t'. All 9 graded parametrized cases pass and the full tests/test_utils.py module (228 passed, 1 skipped) stays green. Diff saved at rw1/validator_fix.diff (semantically equivalent to the maintainer fix, implemented independently from issue text + tests).",
+    "touched_source_file": "src/requests/utils.py"
+  },
+  "notes": {
+    "offline": "Fully offline. The graded test calls requests.utils.should_bypass_proxies directly with an explicit no_proxy string - no network, no live server, no httpbin.",
+    "extra_deps_installed": "none beyond `pytest` (installed via `pip install -e . pytest`). No pytest-httpbin needed.",
+    "python": "CPython 3.13 (python), installed editable (`pip install -e .`).",
+    "editable_install_gotcha": "requests uses a src/ layout; `pip install -e .` records an absolute path to THIS checkout's src dir via the __editable__ finder. Do NOT copy a checkout+venv to another dir and expect it to resolve locally - it will keep importing the ORIGINAL src. Each of work_validate/work_sol/work_opus has its OWN venv created in place. If a grader relocates a checkout, re-run `pip install --force-reinstall --no-deps -e .` inside it.",
+    "venv_python": ".venv/Scripts/python (Windows).",
+    "gitignored_venv": ".venv/ is in the repo .gitignore, so `git status` stays clean with the venv present.",
+    "backup_candidate": "PR #7315 / issue #6711 (preserve leading slashes in path_url, S3 presigned URLs) - also clean, offline, unit-level (tests/test_adapters.py) - held in reserve if #7427 is ever disqualified."
+  }
+}

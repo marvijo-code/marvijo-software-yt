@@ -1,0 +1,32 @@
+{
+  "repo": "Textualize/rich",
+  "repo_url": "https://github.com/Textualize/rich",
+  "issue_number": 4041,
+  "issue_title": "`FileProxy.isatty()` always returns `False` instead of delegating to the proxied file",
+  "pr_number": 4077,
+  "base_sha": "58ac15120fe254886c10d6253667733c83604cb4",
+  "merge_sha": "19c67b9a3479841e9133bea94607c89ee931d3fc",
+  "grade_tests": [
+    "tests/test_file_proxy.py::test_isatty"
+  ],
+  "regression_tests": [
+    "tests/test_file_proxy.py"
+  ],
+  "validator": {
+    "solved": true,
+    "fix_summary": "Added an isatty() method to rich.file_proxy.FileProxy that delegates to the proxied underlying file: `def isatty(self) -> bool: return self.__file.isatty()`. Root cause is that io.TextIOBase (a base class of FileProxy) defines isatty() in the MRO, so the class's generic __getattr__ delegation is never consulted for isatty. The explicit override mirrors the existing fileno() delegation. This is identical in effect to the maintainer fix in PR #4077. Verified without reading the PR source diff.",
+    "grade_test_at_base": "FAIL (assert False - FileProxy.isatty returns False)",
+    "grade_test_after_fix": "PASS",
+    "touched_module_after_fix": "tests/test_file_proxy.py 4 passed",
+    "regression_check": "tests/test_console.py 93 passed, 7 skipped"
+  },
+  "notes": {
+    "grading_command": "cd <solution_checkout> && .venv/Scripts/python.exe -m pytest tests/test_file_proxy.py::test_isatty -q -p no:cacheprovider",
+    "regression_command": ".venv/Scripts/python.exe -m pytest tests/test_file_proxy.py -q -p no:cacheprovider",
+    "apply_tests_patch": "From repo root at BASE: `git apply <rw4>/tests.patch` adds test_isatty to tests/test_file_proxy.py. Verified `git apply --check` clean at BASE.",
+    "tests_patch_scope": "TEST files only (tests/test_file_proxy.py). PR also touched CHANGELOG.md and rich/file_proxy.py (the source fix), which are excluded from tests.patch.",
+    "base_is_first_parent": "BASE = first parent of merge commit 19c67b9 (a true 2-parent merge, not a squash). Parent 1 = 58ac151 (mainline), Parent 2 = 494b7950 (PR branch tip).",
+    "environment": "Python 3.13.14, pytest 9.1.1, rich installed editable (pip install -e .). Pure-Python, offline, no ANSI/terminal-size dependency. Windows-safe (test does not skip on win32; uses a plain in-process TTYFile stub).",
+    "expected_source_fix": "Add to rich/file_proxy.py: `def isatty(self) -> bool: return self.__file.isatty()` (name-mangled self._FileProxy__file inside the class)."
+  }
+}

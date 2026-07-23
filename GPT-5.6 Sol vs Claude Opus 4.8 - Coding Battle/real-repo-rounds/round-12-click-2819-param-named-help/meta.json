@@ -1,0 +1,73 @@
+{
+  "repo": "pallets/click",
+  "repo_url": "https://github.com/pallets/click.git",
+  "issue_number": 2819,
+  "issue_title": "help not resolving automatically",
+  "pr_number": 3678,
+  "pr_title": "Fix parsing when a parameter is named `help`",
+  "base_sha": "8c1a0a7abbc1c36f70d1f65f3604acc46c5ce6ab",
+  "merge_sha": "b67832c2167e5b0ff6764a8c04a0a9087e697b5a",
+  "grade_tests": [
+    "tests/test_basic.py::test_param_named_help",
+    "tests/test_basic.py::test_param_squatting_help_option_name",
+    "tests/test_basic.py::test_option_reusing_help_flag",
+    "tests/test_options.py::test_argument_sharing_param_name_warning",
+    "tests/test_options.py::test_options_sharing_name_no_warning",
+    "tests/test_info_dict.py::test_command"
+  ],
+  "grade_tests_expanded_ids": [
+    "tests/test_basic.py::test_param_named_help[no-collision]",
+    "tests/test_basic.py::test_param_named_help[argument]",
+    "tests/test_basic.py::test_param_named_help[option]",
+    "tests/test_basic.py::test_param_named_help[custom-flags]",
+    "tests/test_basic.py::test_param_squatting_help_option_name",
+    "tests/test_basic.py::test_option_reusing_help_flag",
+    "tests/test_options.py::test_argument_sharing_param_name_warning",
+    "tests/test_options.py::test_options_sharing_name_no_warning",
+    "tests/test_info_dict.py::test_command[Command]",
+    "tests/test_info_dict.py::test_command[Group]",
+    "tests/test_info_dict.py::test_command[Nested Group]"
+  ],
+  "regression_tests": [
+    "tests/test_basic.py",
+    "tests/test_options.py",
+    "tests/test_info_dict.py"
+  ],
+  "test_files_touched_by_fix": [
+    "tests/test_basic.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+  ],
+  "source_files_touched_by_fix": [
+    "src/click/core.py"
+  ],
+  "fix_size_changed_lines": {
+    "src_additions": 44,
+    "src_deletions": 2,
+    "note": "PR total 172/-4 additions but most are tests+docs+CHANGES; the actual library fix is src/click/core.py only (+44/-2)."
+  },
+  "validator": {
+    "solved": true,
+    "read_reference_source_diff_before_solving": true,
+    "honesty_note": "The reference PR source diff was viewed during discovery in this same session, so this is not a fully-blind solve. However the fix was re-implemented by hand from the issue + failing-test expectations (constant name, reserved-storage-name approach, duplicate-name warning branches) and independently verified to pass all grade tests plus the entire suite. The approach (reserved storage name for the auto help option) is essentially the only sound fix the tests admit, since test_info_dict pins name=='_click_default_help' and test_basic pins help_option.name=='_click_default_help'.",
+    "fix_summary": "In src/click/core.py: (1) add module constant _HELP_OPTION_STORAGE_NAME = '_click_default_help'; (2) in Command.get_help_option, build the auto help option via help_option(*help_option_names, _HELP_OPTION_STORAGE_NAME)(self) so its stored value name becomes the reserved '_click_default_help' instead of 'help', preventing collision with a user parameter named 'help'; (3) in Command.get_params, after the existing duplicate-opts check, add a duplicate storage-name check: for any name shared by >1 param, warn if the auto help option is among the sharers ('reserved for the automatic help option'), else warn if any sharer is an Argument ('used by an argument and another parameter'). Options that deliberately share a name (feature switches) do NOT warn.",
+    "grade_result_with_own_fix": "11 passed",
+    "touched_modules_result_with_own_fix": "776 passed (test_basic.py + test_options.py + test_info_dict.py)",
+    "full_suite_result_with_own_fix": "1832 passed, 94 skipped, 1 xfailed"
+  },
+  "evidence": {
+    "fail_at_base": "With tests.patch applied at BASE (8c1a0a7), grade set = 9 failed, 2 passed (test_option_reusing_help_flag and test_options_sharing_name_no_warning already passed at base; all other grade tests fail).",
+    "pass_at_merge": "At MERGE (b67832c) the grade set = 11 passed.",
+    "apply_check": "git apply --check tests.patch passes cleanly at BASE."
+  },
+  "grading_command": ".venv/Scripts/python -m pytest \"tests/test_basic.py::test_param_named_help\" \"tests/test_basic.py::test_param_squatting_help_option_name\" \"tests/test_basic.py::test_option_reusing_help_flag\" \"tests/test_options.py::test_argument_sharing_param_name_warning\" \"tests/test_options.py::test_options_sharing_name_no_warning\" \"tests/test_info_dict.py::test_command\"",
+  "grading_wall_clock_seconds": 0.64,
+  "notes": [
+    "Pure Python, no compiled deps. Cross-platform: no POSIX-only terminal behavior in the grade tests (they use CliRunner in-process, not a real TTY).",
+    "click version at BASE = 8.5.0.dev; requires-python >=3.10; python 3.13 used here.",
+    "pip install -e . pytest per checkout; grade tests only need pytest.",
+    "tests.patch (test-file-only diff from the fix PR) lives at rw2/tests.patch; apply it on top of a solver's fixed BASE tree to grade. It also contains the warnings-as-errors-friendly tests; the repo's pytest config already treats warnings appropriately for these.",
+    "IMPORTANT for grading: the grade tests treat unexpected UserWarnings strictly (pytest.warns / warning-as-error), so a fix that emits spurious duplicate-name warnings for legitimate feature-switch options (two options sharing one storage name) will FAIL test_options_sharing_name_no_warning. A correct fix must exempt option-only name-sharing.",
+    "work_sol and work_opus are pristine at BASE (git status clean except untracked task.md), each with a ready .venv. work_validate holds the solvability proof (BASE + tests.patch + my own source fix)."
+  ]
+}

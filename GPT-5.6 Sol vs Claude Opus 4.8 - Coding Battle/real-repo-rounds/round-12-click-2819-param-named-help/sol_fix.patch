@@ -1,0 +1,52 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 6de4216..d9d4d40 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -55,6 +55,10 @@ if t.TYPE_CHECKING:
+ F = t.TypeVar("F", bound="t.Callable[..., t.Any]")
+ V = t.TypeVar("V")
+ 
++# Reserved storage name of the automatic help option. No user parameter is
++# expected to claim it.
++_HELP_OPTION_STORAGE_NAME = "_click_default_help"
++
+ 
+ def _complete_visible_commands(
+     ctx: Context, incomplete: str
+@@ -1153,6 +1157,10 @@ class Command:
+ 
+         Skipped if :attr:`add_help_option` is ``False``.
+ 
++        .. versionchanged:: 8.5.0
++            If the help option's storage name conflicts with another
++            parameter, it uses a reserved internal name instead.
++
+         .. versionchanged:: 8.1.8
+             The help option is now cached to avoid creating it multiple times.
+         """
+@@ -1169,10 +1177,24 @@ class Command:
+             # Avoid circular import.
+             from .decorators import help_option
+ 
+-            # Apply help_option decorator and pop resulting option
++            # Apply help_option decorator and pop resulting option.
+             help_option(*help_option_names)(self)
+             self._help_option = self.params.pop()  # type: ignore[assignment]
+ 
++            # The parser stores values by parameter name, even when the
++            # parameter does not expose its value. Keep the automatic help
++            # option clear of user parameters that would otherwise clobber
++            # its value.
++            param_names = {param.name for param in self.params}
++
++            if self._help_option.name in param_names:
++                storage_name = _HELP_OPTION_STORAGE_NAME
++
++                while storage_name in param_names:
++                    storage_name = f"_{storage_name}"
++
++                self._help_option.name = storage_name
++
+         return self._help_option
+ 
+     def make_parser(self, ctx: Context) -> _OptionParser:

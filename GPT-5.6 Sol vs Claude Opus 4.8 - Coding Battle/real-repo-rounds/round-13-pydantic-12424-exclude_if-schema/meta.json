@@ -1,0 +1,46 @@
+{
+  "repo": "pydantic/pydantic",
+  "issue_number": 12424,
+  "issue_title": "Fields with `exclude_if` should not be required in serialization JSON schema",
+  "pr_number": 12430,
+  "pr_title": "Exclude fields with `exclude_if` from JSON Schema required fields",
+  "base_sha": "f334963c7e304d1dc4ef4fa5955e87cd6a11c750",
+  "merge_sha": "e0a67308d5a40a24d2a76ab72bd6d9b889788f8a",
+  "pr_merged_at": "2025-10-23T12:27:11Z",
+  "library_source_files_changed": ["pydantic/json_schema.py"],
+  "test_files_changed": ["tests/test_json_schema.py"],
+  "grade_tests": [
+    "tests/test_json_schema.py::test_serialization_schema_with_exclude_exclude_if"
+  ],
+  "regression_tests": [
+    "tests/test_json_schema.py"
+  ],
+  "validator": {
+    "solved": true,
+    "fix_summary": "In GenerateJsonSchema.field_is_required (pydantic/json_schema.py), the pre-fix code only excluded fields carrying the always-on 'serialization_exclude' flag from the required list (and only when json_schema_serialization_defaults_required was set). It never considered 'serialization_exclude_if', so conditionally-excluded fields were wrongly marked required in serialization-mode schemas. Independent fix: compute a base 'has_default' from field type/default (typed-dict-field uses required/total; others use schema type == 'default'), then in serialization mode subtract any field with a non-None 'serialization_exclude_if'. Under json_schema_serialization_defaults_required=True a field is required iff it has no exclude_if; otherwise required iff it has no default AND no exclude_if. Validation mode returns required iff no default (unchanged). Matches the official PR #12430 behavior. Verified: grade test passes and full tests/test_json_schema.py passes 526/531 (5 skipped, 1 xfailed).",
+    "solved_without_reading_official_source_diff": true
+  },
+  "evidence": {
+    "base_plus_testspatch_grade_test": "FAIL (AssertionError: required is ['a','e'] expected ['a'] - exclude_if field 'e' wrongly required)",
+    "merge_grade_test": "PASS (verified by applying official source_fix.patch on top of BASE+tests.patch)",
+    "validator_fix_grade_test": "PASS",
+    "validator_fix_full_module": "526 passed, 5 skipped, 1 xfailed"
+  },
+  "notes": {
+    "grading_command": ".venv/Scripts/python -m pytest \"tests/test_json_schema.py::test_serialization_schema_with_exclude_exclude_if\" -q",
+    "grading_wall_time_seconds": 1.2,
+    "regression_command": ".venv/Scripts/python -m pytest tests/test_json_schema.py -q",
+    "python": "3.13.14 (Windows)",
+    "pydantic_core": "pinned wheel 2.41.4 pulled by `pip install -e .` (pure-Python fix; no rust rebuild)",
+    "extra_deps_installed": ["pytest", "jsonschema", "dirty-equals", "pytest-run-parallel", "pytest-benchmark", "pytest-mock"],
+    "why_extra_deps": "conftest.py imports jsonschema; pyproject filterwarnings='error' turns the unknown 'thread_unsafe' mark (from pytest-run-parallel) into an INTERNALERROR unless the plugin is installed; pyproject addopts references pytest-benchmark options. Installing these plugins lets pytest run with the repo's native config (no -o addopts override needed).",
+    "gotcha_addopts": "If pytest-benchmark / pytest-run-parallel are NOT installed, you must pass `-o addopts=\"\"` to strip the benchmark flags, AND the 'thread_unsafe' mark will error under filterwarnings=error. Installing both plugins (done in all venvs) avoids both problems - grading runs with plain native config.",
+    "test_rename": "The PR renamed the old test 'test_serialization_schema_with_exclude' to 'test_serialization_schema_with_exclude_exclude_if'; the grade node id is the new name. The old name no longer exists after tests.patch.",
+    "checkouts": {
+      "work_validate": "BASE + tests.patch + validator's own fix (solvability proof; working tree dirty by design)",
+      "work_sol": "PRISTINE at BASE, .venv ready, task.md at root",
+      "work_opus": "PRISTINE at BASE, .venv ready, task.md at root"
+    },
+    "grading_procedure": "In a solution checkout after the model edits source: apply rw3/tests.patch (git apply tests.patch), then run the grading_command. tests.patch is verified to `git apply --check` cleanly at BASE."
+  }
+}

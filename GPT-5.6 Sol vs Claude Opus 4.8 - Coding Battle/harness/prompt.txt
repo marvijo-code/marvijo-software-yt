@@ -1,0 +1,1 @@
+You are in a timed coding benchmark. Work ONLY in the current directory. Read task.md and complete the task fully. Your work is graded by hidden tests written strictly against the spec in task.md. Verify your solution yourself before finishing. Wall-clock time is part of your score, so be efficient but correct.

@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Departures</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #071018;
+      --panel: #0c1822;
+      --panel-2: #101f2b;
+      --line: #223442;
+      --text: #f3f7fa;
+      --muted: #91a4b2;
+      --accent: #63d3ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% 5%, rgba(36, 121, 154, .16), transparent 34rem),
+        linear-gradient(145deg, #050b11, var(--bg) 55%, #09151d);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 58px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 750;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 750;
+      letter-spacing: -.05em;
+      line-height: .95;
+    }
+
+    .subtitle {
+      margin: 11px 0 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 0 0 auto;
+    }
+
+    .search {
+      position: relative;
+      display: block;
+    }
+
+    .search svg {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      width: 17px;
+      color: #78909f;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    #filter {
+      width: 255px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      background: rgba(12, 24, 34, .85);
+      color: var(--text);
+      font: inherit;
+      padding: 0 14px 0 41px;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+    }
+
+    #filter::placeholder { color: #6f8492; }
+
+    #filter:focus {
+      border-color: #438ca8;
+      background: var(--panel);
+      box-shadow: 0 0 0 3px rgba(99, 211, 255, .11);
+    }
+
+    #count {
+      min-width: 70px;
+      color: #bfd0db;
+      font-size: .82rem;
+      font-weight: 650;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .board-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(12, 24, 34, .93);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+    }
+
+    #board {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th {
+      height: 54px;
+      border-bottom: 1px solid #2b3f4e;
+      background: var(--panel-2);
+      color: #8fa5b4;
+      font-size: .69rem;
+      font-weight: 750;
+      letter-spacing: .13em;
+      text-align: left;
+      text-transform: uppercase;
+      cursor: pointer;
+      user-select: none;
+      transition: color .15s, background .15s;
+    }
+
+    th:hover, th:focus-visible {
+      background: #142735;
+      color: var(--text);
+    }
+
+    th:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -3px;
+    }
+
+    th::after {
+      display: inline-block;
+      width: .85em;
+      margin-left: 7px;
+      color: var(--accent);
+      content: "";
+    }
+
+    th[aria-sort="ascending"]::after { content: "↑"; }
+    th[aria-sort="descending"]::after { content: "↓"; }
+    th[aria-sort] { color: #d9f5ff; }
+
+    th, td { padding: 0 22px; }
+    th:nth-child(1) { width: 17%; }
+    th:nth-child(2) { width: 30%; }
+    th:nth-child(3) { width: 15%; }
+    th:nth-child(4) { width: 13%; }
+    th:nth-child(5) { width: 25%; }
+
+    td {
+      height: 66px;
+      border-bottom: 1px solid rgba(34, 52, 66, .78);
+      color: #d8e3e9;
+      font-size: .93rem;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+
+    tbody tr {
+      transition: background .15s ease;
+    }
+
+    tbody tr:hover { background: rgba(83, 141, 166, .09); }
+
+    td:nth-child(1),
+    td:nth-child(3) {
+      color: #f5fbff;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-weight: 700;
+      letter-spacing: .035em;
+    }
+
+    td:nth-child(3) {
+      color: #c6eefa;
+      font-size: 1rem;
+    }
+
+    td:nth-child(4) {
+      color: #a9bbc6;
+      font-weight: 650;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 750;
+      letter-spacing: .02em;
+      padding: 4px 11px;
+      white-space: nowrap;
+    }
+
+    .chip[data-status="On Time"] {
+      background: rgba(53, 197, 127, .12);
+      color: #61dda1;
+    }
+
+    .chip[data-status="Boarding"] {
+      background: rgba(69, 155, 255, .13);
+      color: #69b1ff;
+    }
+
+    .chip[data-status="Delayed"] {
+      background: rgba(244, 168, 53, .13);
+      color: #f5b84f;
+    }
+
+    .chip[data-status="Cancelled"] {
+      background: rgba(239, 85, 92, .13);
+      color: #ff747c;
+    }
+
+    .empty td {
+      height: 130px;
+      color: var(--muted);
+      font-family: inherit;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 24px, 1120px);
+        padding-top: 32px;
+      }
+
+      .topbar {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .controls { width: 100%; }
+      .search { flex: 1; }
+      #filter { width: 100%; }
+      th, td { padding: 0 10px; }
+      th { font-size: .6rem; letter-spacing: .05em; }
+      td { font-size: .78rem; }
+      .chip { font-size: .64rem; padding-inline: 7px; }
+      th:nth-child(1) { width: 18%; }
+      th:nth-child(2) { width: 26%; }
+      th:nth-child(3) { width: 15%; }
+      th:nth-child(4) { width: 12%; }
+      th:nth-child(5) { width: 29%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Live flight information</p>
+        <h1>Departures</h1>
+        <p class="subtitle">Today’s outbound flights and gate information</p>
+      </div>
+      <div class="controls">
+        <label class="search" aria-label="Filter by flight or city">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-4-4"></path>
+          </svg>
+          <input id="filter" type="search" placeholder="Flight or city…" autocomplete="off">
+        </label>
+        <span id="count" aria-live="polite">12 flights</span>
+      </div>
+    </div>
+
+    <div class="board-frame">
+      <table id="board">
+        <thead>
+          <tr>
+            <th data-key="flight" scope="col" tabindex="0">Flight</th>
+            <th data-key="city" scope="col" tabindex="0">City</th>
+            <th data-key="time" scope="col" tabindex="0" aria-sort="ascending">Time</th>
+            <th data-key="gate" scope="col" tabindex="0">Gate</th>
+            <th data-key="status" scope="col" tabindex="0">Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    (() => {
+      const body = document.querySelector("#board tbody");
+      const headers = [...document.querySelectorAll("#board th[data-key]")];
+      const filter = document.querySelector("#filter");
+      const count = document.querySelector("#count");
+      let sortKey = "time";
+      let sortDirection = 1;
+
+      const compare = (a, b) => {
+        if (sortKey === "time") {
+          const toMinutes = value => {
+            const [hours, minutes] = value.split(":").map(Number);
+            return hours * 60 + minutes;
+          };
+          return (toMinutes(a.time) - toMinutes(b.time)) * sortDirection;
+        }
+        return a[sortKey].localeCompare(b[sortKey], undefined, {
+          numeric: true,
+          sensitivity: "base"
+        }) * sortDirection;
+      };
+
+      const render = () => {
+        const query = filter.value.trim().toLocaleLowerCase();
+        const visible = FLIGHTS
+          .filter(item =>
+            item.flight.toLocaleLowerCase().includes(query) ||
+            item.city.toLocaleLowerCase().includes(query)
+          )
+          .slice()
+          .sort(compare);
+
+        body.replaceChildren();
+        visible.forEach(item => {
+          const row = document.createElement("tr");
+          row.dataset.flight = item.flight;
+
+          ["flight", "city", "time", "gate"].forEach(key => {
+            const cell = document.createElement("td");
+            cell.textContent = item[key];
+            row.appendChild(cell);
+          });
+
+          const statusCell = document.createElement("td");
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          chip.dataset.status = item.status;
+          chip.textContent = item.status;
+          statusCell.appendChild(chip);
+          row.appendChild(statusCell);
+          body.appendChild(row);
+        });
+
+        if (visible.length === 0) {
+          const row = document.createElement("tr");
+          row.className = "empty";
+          const cell = document.createElement("td");
+          cell.colSpan = 5;
+          cell.textContent = "No matching flights";
+          row.appendChild(cell);
+          body.appendChild(row);
+        }
+
+        count.textContent = `${visible.length} ${visible.length === 1 ? "flight" : "flights"}`;
+      };
+
+      const sortBy = header => {
+        const nextKey = header.dataset.key;
+        if (sortKey === nextKey) {
+          sortDirection *= -1;
+        } else {
+          sortKey = nextKey;
+          sortDirection = 1;
+        }
+
+        headers.forEach(item => item.removeAttribute("aria-sort"));
+        header.setAttribute("aria-sort", sortDirection === 1 ? "ascending" : "descending");
+        render();
+      };
+
+      headers.forEach(header => {
+        header.addEventListener("click", () => sortBy(header));
+        header.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            sortBy(header);
+          }
+        });
+      });
+
+      filter.addEventListener("input", render);
+      render();
+    })();
+  </script>
+</body>
+</html>

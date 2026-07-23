@@ -1,0 +1,28 @@
+{
+  "repo": "sympy/sympy",
+  "issue_number": 28219,
+  "issue_title": "`Pow.as_real_imag` is inconsistent with evaluating `Pow(0, -1)` as ComplexInfinity",
+  "pr_number": 28956,
+  "base_sha": "21ec57dc9e133d102bf53f05f305cc2ac52193fa",
+  "merge_sha": "5f8bf9bae0df5e425da0c402fbf95dea75ae7dca",
+  "grade_tests": [
+    "sympy/core/tests/test_power.py::test_issue_28219"
+  ],
+  "regression_tests": [
+    "sympy/core/tests/test_power.py"
+  ],
+  "validator": {
+    "solved": true,
+    "fix_summary": "In Pow.as_real_imag (sympy/core/power.py), inside the `self.exp.is_Integer` branch, add a guard BEFORE the real-base short-circuit: `if exp < 0 and self.base.is_zero: return (S.NaN, S.NaN)`. A negative-exponent power of a zero base is ComplexInfinity (zoo), whose real and imaginary parts are both undefined; the pre-existing `if not im_e: return self, S.Zero` path wrongly reported imag=0 for it. Nonzero real bases (e.g. Pow(x,-1) with x real) are unaffected and still return (1/x, 0). This is behaviorally identical to the maintainer fix (PR #28956).",
+    "own_solve_evidence": "BASE+tests.patch: test_issue_28219 FAILED (assert (1/0, 0) == (nan, nan)). After own 4-line source edit: grade test PASSED; full sympy/core/tests/test_power.py = 44 passed; sympy/core/tests/test_arit.py = 101 passed, 2 xfailed."
+  },
+  "notes": {
+    "grading_command": ".venv/Scripts/python -m pytest sympy/core/tests/test_power.py::test_issue_28219 -q",
+    "regression_command": ".venv/Scripts/python -m pytest sympy/core/tests/test_power.py -q",
+    "timing": "grade test ~0.3s; full test_power.py ~2-3s wall; well under 90s.",
+    "fail_pass_evidence": "tests.patch (test file only) applied at BASE -> test_issue_28219 FAILS; with maintainer source hunk applied -> PASSES (44 passed). Confirmed in work_validate.",
+    "deps": "editable install via `.venv/Scripts/python -m pip install -e . --no-build-isolation`; also requires mpmath, pytest, hypothesis (hypothesis is required by sympy/conftest.py).",
+    "base_note": "Merge commit 5f8bf9b has a single parent (rebased/ff), so BASE = its parent 21ec57d. compare BASE...MERGE = exactly the one PR commit touching only power.py + test_power.py.",
+    "test_files_only_patch": "rw5/tests.patch restricts the PR diff to sympy/core/tests/test_power.py (git apply --check OK at BASE)."
+  }
+}
